@@ -1,0 +1,28 @@
+{
+  "name": "gen-commit",
+  "version": "1.0.1",
+  "type": "module",
+  "description": "This File helps to generate commit message using Gemini API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "gencommit": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insulineru/ai-commit.git"
+  },
+  "keywords": [
+    "ai",
+    "generative ai",
+    "gemini"
+  ],
+  "author": "Prince Kumar",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.17.1",
+    "dotenv": "^16.4.5"
+  }
+}
