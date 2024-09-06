@@ -7,9 +7,8 @@ const gemini = {
 
   sendMessage: async (input, { apiKey, model }) => {
     console.log("promoting gemini AI...");
-
-    console.log("prompting", model);
     //send prompt to Gemini API
+
     try {
       const genAI = new GoogleGenerativeAI(apiKey);
       const aiModel = genAI.getGenerativeModel({ model: model });
@@ -21,7 +20,7 @@ const gemini = {
       return answer;
     } catch (err) {
       console.log(err);
-      throw new Error("local model issues. details:" + err.message);
+      throw new Error("local model issues. details:" + err);
     }
   },
 

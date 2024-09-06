@@ -5,4 +5,4 @@ dotenv.config();
 
 export const args = parseArguments();
 export const AI_PROVIDER = args.PROVIDER || process.env.PROVIDER || 'gemini'
-export const MODEL = args.MODEL || process.env.MODEL;
+export const MODEL = args.MODEL || process.env.MODEL || 'gemini-1.5-flash';

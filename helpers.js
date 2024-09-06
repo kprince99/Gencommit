@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+import readline from "node:readline";
 
 const parseArguments = () => {
   const args = process.argv.slice(2);
@@ -6,7 +7,7 @@ const parseArguments = () => {
 
   for (let index = 0; index < args.length; index++) {
     const currentArg = args[index];
-    const key = currentArg.replace(/^--/, '');
+    const key = currentArg.replace(/^--/, "");
     const nextArgument = args[index + 1];
 
     if (/^--/.test(nextArgument) || nextArgument === undefined) {
@@ -22,11 +23,27 @@ const parseArguments = () => {
 
 const checkGitRepository = () => {
   try {
-    const output = execSync('git rev-parse --is-inside-work-tree', { encoding: 'utf-8' });
-    return output.trim() === 'true';
+    const output = execSync("git rev-parse --is-inside-work-tree", {
+      encoding: "utf-8",
+    });
+    return output.trim() === "true";
   } catch (err) {
     return false;
   }
 };
 
-export { parseArguments, checkGitRepository }
+const getUserPromptFromConsole = async (question) => {
+  return new Promise((resolve) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    rl.question(question, (name) => {
+      rl.close();
+      resolve( name.toLowerCase());
+    });
+  });
+};
+
+export { parseArguments, checkGitRepository, getUserPromptFromConsole };

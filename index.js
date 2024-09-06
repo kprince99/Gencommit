@@ -3,7 +3,7 @@
 "use strict";
 
 import { execSync } from "child_process";
-import { checkGitRepository } from "./helpers.js";
+import { checkGitRepository, getUserPromptFromConsole } from "./helpers.js";
 import gemini from "./models/gemini.js";
 import { AI_PROVIDER, MODEL, args } from "./config.js";
 
@@ -31,10 +31,12 @@ const getPromptForSingleCommit = (diff) => {
 const generateSingleCommit = async (diff) => {
   const prompt = getPromptForSingleCommit(diff);
   // console.log(prompt);
+  console.log("Generating commit message... 🤖");
 
   if (!(await provider.filterApi({ prompt, filterFee: args["filter-fee"] }))) {
     process.exit(1);
   }
+
   const text = await provider.sendMessage(prompt, { apiKey, model: MODEL });
 
   if (!text) {
@@ -43,15 +45,19 @@ const generateSingleCommit = async (diff) => {
   }
 
   console.log(
-    `Here is yout Commit Message: \n -------------------------------------\n 
+    `Here is yout Commit Message: \n -------------------------------------\n
     ${text}
     \n---------------------------------------`
   );
 
-  if (args.force) {
+    const answer = await getUserPromptFromConsole("Do you want to push this commit? [y/n] ");
+    console.log(answer);
+    if (answer === "n" ) {
+      console.log("Commit aborted by user.");
+      process.exit(1);
+    } 
+
     makeCommit(text);
-    return;
-  }
 };
 
 async function generateAICommit() {
