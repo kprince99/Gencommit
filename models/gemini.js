@@ -20,7 +20,7 @@ const gemini = {
       return answer;
     } catch (err) {
       console.log(err);
-      throw new Error("local model issues. details:" + err);
+      throw new Error("Issue with Model. details:" + err);
     }
   },
 
