@@ -54,13 +54,6 @@ const gemini = {
       diff
     );
   },
-
-
-
-  filterApi: ({ prompt, numCompletion = 1, filterFee }) => {
-    //ollama dont have any limits and is free so we dont need to filter anything
-    return true;
-  },
 };
 
 export default gemini;

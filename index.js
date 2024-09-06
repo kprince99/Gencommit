@@ -33,10 +33,6 @@ const generateCommit = async (diff) => {
   // console.log(prompt);
   console.log("Generating commit message... 🤖");
 
-  if (!(await provider.filterApi({ prompt, filterFee: args["filter-fee"] }))) {
-    process.exit(1);
-  }
-
   const text = await provider.generatePrompt(prompt, { apiKey, model: MODEL });
 
   if (!text) {
