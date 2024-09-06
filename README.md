@@ -1,5 +1,5 @@
-# gen-commit
-To generate AI Commits using Google Gemini.
+# Gen-Commit
+Tired of Writing bad commit messages. Here Gen-Commit will help you!
 
 ## About
 
@@ -10,7 +10,7 @@ This is a simple command line tool that uses [Gemini's API](https://github.com/g
 You can use this tool by running the following command in your terminal:
 
 1. Clone this repository
-2. Generate an GEMINI API key [here](https://aistudio.google.com/app/apikey )	
+2. Generate a GEMINI API key [here](https://aistudio.google.com/app/apikey )	
 3. In the repository, run `npm i && sudo npm link -g` for Linux and `npm link` for Windows to link this application globally
 4. Set your `GEMINI_API_KEY` environment variable to your API key	
 5. Make your code changes and stage them with `git add .`	
