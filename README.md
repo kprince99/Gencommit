@@ -18,6 +18,6 @@ You can use this tool by running the following command in your terminal:
 7. Gen-Commit will analyze your changes and generate a commit message.
 8. Approve the commit message and Gen-Commit will create the commit for you ✅
 
-# Things to add.
-- [] Git hook integration: To enable Gen-Commit to automatically produce commit messages whenever changes are staged.
+## Things to add.
+- [ ] Git hook integration: To enable Gen-Commit to automatically produce commit messages whenever changes are staged.
 
