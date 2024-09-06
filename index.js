@@ -47,7 +47,6 @@ const generateCommit = async (diff) => {
   );
 
     const answer = await getUserPromptFromConsole("Do you want to push this commit? [y/n] ");
-    console.log(answer);
     if (answer === "n" ) {
       console.log("Commit aborted by user.");
       process.exit(1);

@@ -34,14 +34,14 @@ const checkGitRepository = () => {
 
 const getUserPromptFromConsole = async (question) => {
   return new Promise((resolve) => {
-    const rl = readline.createInterface({
+    const options = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
     });
 
-    rl.question(question, (name) => {
-      rl.close();
-      resolve( name.toLowerCase());
+    options.question(question, (answer) => {
+      options.close();
+      resolve( answer.toLowerCase());
     });
   });
 };
