@@ -12,7 +12,7 @@ You can use this tool by running the following command in your terminal:
 1. Clone this repository
 2. Generate a GEMINI API key [here](https://aistudio.google.com/app/apikey )	
 3. In the repository, run `npm i && sudo npm link -g` for Linux and `npm link` for Windows to link this application globally
-4. Set your `GEMINI_API_KEY` environment variable to your API key	
+4. Set your `API_KEY` environment variable to your API key	
 5. Make your code changes and stage them with `git add .`	
 6. Type `gencommit` in your terminal	
 7. Gen-Commit will analyze your changes and generate a commit message.
