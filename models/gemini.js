@@ -24,13 +24,11 @@ const gemini = {
     }
   },
 
-  getPromptForSingleCommit: (diff, {commitType, language }) => {
+  getPromptForSingleCommit: (diff, {language}) => {
     //add language tag to the prompt if it was provided
     return (
-      "I want you to act as the author of a commit message in git." +
-      `I'll enter a git diff, and your job is to convert it into a useful commit message in ${language} language` +
-      (commitType ? ` with commit type '${commitType}'. ` : ". ") +
-      "Do not preface the commit with anything, use the present tense, return the full sentence, and use the conventional commits specification (<type in lowercase>: <subject>): " +
+      `I want you to act as the author of a commit message in git. I'll enter a git diff, and your job is to convert it into a useful commit message in ${language} language.
+      Do not preface the commit with anything, use the present tense, return the full sentence, and use the conventional commits specification (<type in lowercase>: <subject>): ` +
       '\n\n'+
       diff
     );

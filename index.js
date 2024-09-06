@@ -15,7 +15,6 @@ if (AI_PROVIDER == "gemini" && !apiKey) {
   process.exit(1);
 }
 
-const commitType = args["commit-type"];
 const provider = gemini;
 
 const makeCommit = (input) => {
@@ -25,7 +24,7 @@ const makeCommit = (input) => {
 };
 
 const getPromptForCommit = (diff) => {
-  return provider.getPromptForSingleCommit(diff, { commitType, language });
+  return provider.getPromptForSingleCommit(diff, { language });
 };
 
 const generateCommit = async (diff) => {
