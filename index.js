@@ -7,8 +7,8 @@ import { checkGitRepository, getUserPromptFromConsole } from "./helpers.js";
 import gemini from "./models/gemini.js";
 import { AI_PROVIDER, MODEL, args } from "./config.js";
 
-const language = args.language || process.env.AI_COMMIT_LANGUAGE || "english";
-const apiKey = args.apiKey || process.env.API_KEY;
+const language = args.language || "english";
+const apiKey =  process.env.API_KEY;
 
 if (AI_PROVIDER == "gemini" && !apiKey) {
   console.error("Please set the Gemini_API KEY in the environment variable.");
@@ -19,17 +19,17 @@ const commitType = args["commit-type"];
 const provider = gemini;
 
 const makeCommit = (input) => {
-  console.log("Committing Message... 🚀 ");
+  console.log("Committing Message...");
   execSync(`git commit -F -`, { input });
   console.log("Commit Successful! 🎉");
 };
 
-const getPromptForSingleCommit = (diff) => {
+const getPromptForCommit = (diff) => {
   return provider.getPromptForSingleCommit(diff, { commitType, language });
 };
 
 const generateCommit = async (diff) => {
-  const prompt = getPromptForSingleCommit(diff);
+  const prompt = getPromptForCommit(diff);
   // console.log(prompt);
   console.log("Generating commit message... 🤖");
 

@@ -35,25 +35,6 @@ const gemini = {
       diff
     );
   },
-
-
-  /**
-   * @param {string} diff
-   * @param {{ commitType: string, numOptions: number, language: string }} options
-   * @returns {string}
-   */
-  getPromptForMultipleCommits: (diff, { commitType, numOptions, language: languageTag }) => {
-    const commitTypeSuffix = commitType ? ` with commit type '${commitType}.'` : "";
-    const languageSuffix = languageTag ? ` in ${languageTag}` : "";
-    const numOptionsSuffix = ` and make ${numOptions} options that are separated by ";".`;
-
-    return (
-      "I want you to act as the author of a commit message in git." +
-      `I'll enter a git diff, and your job is to convert it into a useful commit message ${languageSuffix} ${commitTypeSuffix} ${numOptionsSuffix}` +
-      "For each option, use the present tense, return the full sentence, and use the conventional commits specification (<type in lowercase>: <subject>):" +
-      diff
-    );
-  },
 };
 
 export default gemini;
