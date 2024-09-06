@@ -5,7 +5,7 @@ const gemini = {
    * send prompt to ai model.
    */
 
-  sendMessage: async (input, { apiKey, model }) => {
+  generatePrompt: async (input, { apiKey, model }) => {
     console.log("promoting gemini AI...");
     //send prompt to Gemini API
 

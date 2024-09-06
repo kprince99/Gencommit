@@ -28,7 +28,7 @@ const getPromptForSingleCommit = (diff) => {
   return provider.getPromptForSingleCommit(diff, { commitType, language });
 };
 
-const generateSingleCommit = async (diff) => {
+const generateCommit = async (diff) => {
   const prompt = getPromptForSingleCommit(diff);
   // console.log(prompt);
   console.log("Generating commit message... 🤖");
@@ -37,7 +37,7 @@ const generateSingleCommit = async (diff) => {
     process.exit(1);
   }
 
-  const text = await provider.sendMessage(prompt, { apiKey, model: MODEL });
+  const text = await provider.generatePrompt(prompt, { apiKey, model: MODEL });
 
   if (!text) {
     console.log("Sorry, I can't generate a commit message. 😔");
@@ -73,12 +73,12 @@ async function generateAICommit() {
   if (!diff) {
     console.log("No changes to commit 🙅");
     console.log(
-      "May be you forgot to add the files? Try git add . and then run this script again."
+      "Forgot to add files. Try git add . and then script again"
     );
     process.exit(1);
   }
 
-  await generateSingleCommit(diff);
+  await generateCommit(diff);
 }
 
 await generateAICommit();
