@@ -32,6 +32,34 @@ const checkGitRepository = () => {
   }
 };
 
+async function getStagedDiff(excludeFiles = false) {
+  const excludeFromDiff = (path) => `:!${path}`;
+
+  const filesToExclude = ["package-lock.json", "*.lock"].map(
+    excludeFromDiff
+  );
+
+  const command = "git diff --cached --diff-algorithm=minimal";
+  const gitCommand = command + ' --name-only -- ' + `'${filesToExclude}'`+ (excludeFiles ? excludeFiles.map(excludeFromDiff) : []);
+  try {
+    // Execute the git command synchronously
+    const files = execSync(gitCommand).toString().trim();
+    if (!files) {
+      return;
+    }
+
+    const diffCommand = command + ' ' +  `'${filesToExclude}'` + (excludeFiles ? excludeFiles.map(excludeFromDiff) : [])
+
+    const diff = execSync(diffCommand).toString();
+    return {
+      files: files.split("\n"),
+      diff,
+    };
+  } catch (error) {
+    console.error(`Error executing command: ${error.message}`);
+  }
+}
+
 const getUserPromptFromConsole = async (question) => {
   return new Promise((resolve) => {
     const options = readline.createInterface({
@@ -41,9 +69,9 @@ const getUserPromptFromConsole = async (question) => {
 
     options.question(question, (answer) => {
       options.close();
-      resolve( answer.toLowerCase());
+      resolve( answer.toLowerCase().trim());
     });
   });
 };
 
-export { parseArguments, checkGitRepository, getUserPromptFromConsole };
+export { parseArguments, checkGitRepository, getUserPromptFromConsole, getStagedDiff };

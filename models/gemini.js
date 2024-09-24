@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const gemini = {
   /**
@@ -16,7 +16,7 @@ const gemini = {
       const answer = response.response.text();
       // console.log("response: ", answer);
       console.log("prompting ai done!");
-      
+
       return answer;
     } catch (err) {
       console.log(err);
@@ -24,12 +24,14 @@ const gemini = {
     }
   },
 
-  getPromptForSingleCommit: (diff, {language}) => {
+  getPromptForSingleCommit: (diff, { language }) => {
     //add language tag to the prompt if it was provided
     return (
-      `I want you to act as the author of a commit message in git. I'll enter a git diff, and your job is to convert it into a useful commit message in ${language} language.
-      Do not preface the commit with anything, use the present tense, return the full sentence, and use the conventional commits specification (<type in lowercase>: <subject>): ` +
-      '\n\n'+
+      `Generate a concise git commit message written in present tense for the following code diff with the given specifications below:',
+		  Message language: ${language},
+      Needs to be in one line,
+		  Exclude anything unnecessary such as translation. Your entire response will be passed directly into git commit.` +
+      "\n\n" +
       diff
     );
   },

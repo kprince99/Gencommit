@@ -3,12 +3,12 @@
 "use strict";
 
 import { execSync } from "child_process";
-import { checkGitRepository, getUserPromptFromConsole } from "./helpers.js";
+import { checkGitRepository, getUserPromptFromConsole, getStagedDiff} from "./helpers.js";
 import gemini from "./models/gemini.js";
 import { AI_PROVIDER, MODEL, args } from "./config.js";
 
 const language = args.language || "english";
-const apiKey =  process.env.API_KEY;
+const apiKey = process.env.API_KEY;
 
 if (AI_PROVIDER == "gemini" && !apiKey) {
   console.error("Please set the Gemini_API KEY in the environment variable.");
@@ -45,14 +45,25 @@ const generateCommit = async (diff) => {
     \n---------------------------------------`
   );
 
-    const answer = await getUserPromptFromConsole("Do you want to push this commit? [y/n] ");
-    if (answer === "n" ) {
-      console.log("Commit aborted by user.");
-      process.exit(1);
-    } 
+  let answer;
 
+  do {
+    answer = await getUserPromptFromConsole(
+      "Do you want to push this commit? [y/n] "
+    );
+    if (answer !== "y" && answer !== "n") {
+      console.log("Please enter correct value [y/n]");
+    }
+  } while (answer !== "y" && answer !== "n");
+
+  if (answer === "n") {
+    console.log("Commit aborted by user.");
+    process.exit(1);
+  } else {
     makeCommit(text);
+  }
 };
+
 
 async function generateAICommit() {
   const isGitRepository = checkGitRepository();
@@ -62,17 +73,15 @@ async function generateAICommit() {
     process.exit(1);
   }
 
-  const diff = execSync("git diff --staged").toString();
+  const staged = await getStagedDiff();
 
-  if (!diff) {
+  if (!staged.diff) {
     console.log("No changes to commit 🙅");
-    console.log(
-      "Forgot to add files. Try git add . and then script again"
-    );
+    console.log("Forgot to add files. Try git add . and then script again");
     process.exit(1);
   }
 
-  await generateCommit(diff);
+  await generateCommit(staged.diff);
 }
 
 await generateAICommit();
